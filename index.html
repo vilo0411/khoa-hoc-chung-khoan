@@ -6,7 +6,11 @@
     <meta name="description" content="Khóa học đầu tư chứng khoán ProInvestor từ cơ bản đến nâng cao. Học phân tích kỹ thuật, phân tích cơ bản, quản lý vốn hiệu quả năm 2025." />
     <meta name="keywords" content="khóa học chứng khoán, đầu tư chứng khoán, học chứng khoán cơ bản, phân tích kỹ thuật, phân tích cơ bản, ProInvestor" />
     <title>ProInvestor - Khóa Học Chứng Khoán Thực Chiến 2025</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -48,10 +52,15 @@
         "@type": "AggregateRating",
         "ratingValue": "4.8",
         "reviewCount": "1250"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Nhà đầu tư cá nhân, người mới bắt đầu"
       }
     }
     </script>
-
+    
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -74,6 +83,20 @@
                         "xl": "0.75rem",
                         "2xl": "1rem"
                     },
+                    animation: {
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
                 },
             },
         }
@@ -83,7 +106,7 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             font-size: 24px;
         }
-        /* Custom scrollbar for better aesthetics */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -97,18 +120,689 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #11d462; 
         }
+        
+        /* Accordion transition styles */
+        .accordion-content {
+            transition: grid-template-rows 0.3s ease-out;
+            display: grid;
+            grid-template-rows: 0fr;
+        }
+        .accordion-content.open {
+            grid-template-rows: 1fr;
+        }
+        .accordion-inner {
+            overflow: hidden;
+        }
     </style>
 <script type="importmap">
 {
   "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
     "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
+    "react": "https://aistudiocdn.com/react@^19.2.1"
   }
 }
 </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-background-dark">
-    <div id="root"></div>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-background-dark overflow-x-hidden">
+    
+    <div class="relative flex min-h-screen w-full flex-col">
+        <!-- HEADER -->
+        <header class="sticky top-0 z-50 flex justify-center bg-background-dark/80 backdrop-blur-md border-b border-solid border-b-border-dark w-full" role="banner">
+            <div class="flex items-center justify-between whitespace-nowrap px-4 sm:px-10 py-3 w-full max-w-[1280px]">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-4 text-white hover:opacity-90 transition-opacity" aria-label="ProInvestor Home">
+                    <div class="size-8 text-primary">
+                        <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l1.5-1.5L10 14l4-4 1.5 1.5L10 17l-3.5-3.5z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">ProInvestor</h2>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+                    <nav aria-label="Main Navigation">
+                        <div class="flex items-center gap-9">
+                            <a href="#gioi-thieu" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Giới thiệu</a>
+                            <a href="#noi-dung" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Nội dung</a>
+                            <a href="#giang-vien" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Giảng viên</a>
+                            <a href="#hoc-phi" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Học phí</a>
+                            <a href="#faq" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">FAQ</a>
+                            <a href="#lien-he" class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Liên hệ</a>
+                        </div>
+                    </nav>
+                    <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
+                        <span class="truncate">Đăng Ký Ngay</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button 
+                        id="mobile-menu-btn"
+                        class="text-white p-2 hover:bg-surface-dark rounded-lg transition-colors"
+                        aria-label="Toggle menu"
+                        aria-expanded="false"
+                    >
+                        <span id="menu-icon" class="material-symbols-outlined" aria-hidden="true">menu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Nav Dropdown -->
+            <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-background-dark border-b border-border-dark md:hidden animate-fade-in p-4 flex flex-col gap-4 shadow-2xl" aria-label="Mobile Navigation">
+                <a href="#gioi-thieu" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">Giới thiệu</a>
+                <a href="#noi-dung" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">Nội dung</a>
+                <a href="#giang-vien" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">Giảng viên</a>
+                <a href="#hoc-phi" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">Học phí</a>
+                <a href="#faq" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">FAQ</a>
+                <a href="#lien-he" class="mobile-link text-white text-base font-medium py-2 border-b border-border-dark/50 hover:text-primary">Liên hệ</a>
+                <button class="w-full mt-2 flex cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary text-background-dark text-base font-bold hover:bg-primary/90">
+                    Đăng Ký Ngay
+                </button>
+            </nav>
+        </header>
+
+        <main class="flex flex-col items-center">
+            
+            <!-- HERO SECTION -->
+            <section id="hero" class="w-full" aria-label="Giới thiệu khóa học">
+                <div class="w-full max-w-[1280px] mx-auto px-4 md:px-10 py-5">
+                    <div 
+                        class="flex min-h-[520px] md:min-h-[600px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-2xl items-start justify-end px-6 pb-12 md:px-16 md:pb-20 relative overflow-hidden group shadow-2xl"
+                        style="background-image: linear-gradient(rgba(16, 34, 24, 0.2) 0%, rgba(16, 34, 24, 0.9) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_BKoAsvCgxID8LRnCwo1ZGZpYt0gzy6Ub4ESkDy6MUsgnl2pTMIZgvtt-pRFgqnIvUfaD26LRdpkqXjh86V5V1M3VjI4tri_L-sNBotf_ea0-ax3Rft9SizgFr3xW7Nm_UJMvdZ3iVLNeFk3P63efiKqGZDHt3dDZW0dlyEXt1kL_uhFzLRpTE_Lkh-TIXTdMllouekG66GZNIBIlSlGjB-pHFKTR8K3wOQgTLbaGRkNTiqqmV567qLWduRPYf22rzQDdMrT8BQg')"
+                    >
+                        <!-- Animated decorative overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+
+                        <div class="relative flex flex-col gap-4 text-left max-w-3xl animate-slide-up">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md w-fit">
+                                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                <span class="text-primary text-xs font-bold uppercase tracking-wider">Khóa học Best Seller 2025</span>
+                            </div>
+                            
+                            <h1 class="text-white text-4xl font-black leading-tight tracking-tight md:text-6xl drop-shadow-lg">
+                                Phân Tích Đầu Tư Chứng Khoán - Từ Cơ Bản Đến Chuyên Nghiệp
+                            </h1>
+                            <p class="text-white/90 text-base md:text-lg font-normal leading-relaxed max-w-2xl drop-shadow-md">
+                                Nắm Vững Tương Lai Tài Chính Của Bạn. Khóa học toàn diện giúp bạn tự tin ra quyết định đầu tư thông minh và hiệu quả với lợi nhuận bền vững.
+                            </p>
+                        </div>
+
+                        <div class="relative flex flex-wrap gap-4 mt-2">
+                            <button class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-background-dark text-base font-bold leading-normal tracking-wide hover:bg-white hover:text-background-dark transition-all duration-300 shadow-[0_0_20px_rgba(17,212,98,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1">
+                                <span class="truncate">Đăng Ký Ngay</span>
+                            </button>
+                            <button class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-surface-dark/80 backdrop-blur-sm border border-white/20 text-white text-base font-bold leading-normal tracking-wide hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
+                                <span class="truncate">Tìm Hiểu Thêm</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURES SECTION -->
+            <section id="gioi-thieu" class="w-full mt-10 scroll-mt-24">
+                <div class="flex flex-col gap-10 px-4 py-10 w-full max-w-[1280px] mx-auto">
+                    <div class="flex flex-col items-center text-center gap-4">
+                        <h2 class="text-white text-[28px] md:text-[32px] font-bold leading-tight max-w-[720px]">
+                            Những Gì Bạn Sẽ Đạt Được
+                        </h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-[720px]">
+                            Trang bị đầy đủ kiến thức và kỹ năng để tự tin phân tích và lựa chọn cổ phiếu tiềm năng, quản lý danh mục đầu tư hiệu quả và tối ưu hóa lợi nhuận.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Feature 1 -->
+                        <div class="group flex flex-col gap-4 rounded-2xl border border-border-dark bg-surface-dark/50 p-6 hover:bg-surface-dark hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="w-14 h-14 rounded-full bg-[#28392f] flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined !text-3xl text-primary">foundation</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-white text-lg font-bold leading-tight group-hover:text-primary transition-colors">Xây Dựng Nền Tảng Vững Chắc</h3>
+                                <p class="text-text-muted text-sm font-normal leading-relaxed">Hiểu rõ các khái niệm cốt lõi về thị trường chứng khoán, từ cơ bản đến nâng cao, giúp bạn không bị lạc lối giữa rừng thông tin.</p>
+                            </div>
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="group flex flex-col gap-4 rounded-2xl border border-border-dark bg-surface-dark/50 p-6 hover:bg-surface-dark hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="w-14 h-14 rounded-full bg-[#28392f] flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined !text-3xl text-primary">monitoring</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-white text-lg font-bold leading-tight group-hover:text-primary transition-colors">Phân Tích Chuyên Sâu</h3>
+                                <p class="text-text-muted text-sm font-normal leading-relaxed">Thành thạo các công cụ phân tích kỹ thuật và cơ bản để đánh giá chính xác giá trị doanh nghiệp và thời điểm mua bán.</p>
+                            </div>
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="group flex flex-col gap-4 rounded-2xl border border-border-dark bg-surface-dark/50 p-6 hover:bg-surface-dark hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="w-14 h-14 rounded-full bg-[#28392f] flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined !text-3xl text-primary">rocket_launch</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-white text-lg font-bold leading-tight group-hover:text-primary transition-colors">Chiến Lược Thực Tế</h3>
+                                <p class="text-text-muted text-sm font-normal leading-relaxed">Áp dụng các chiến lược đầu tư đã được kiểm chứng để xây dựng danh mục phù hợp với mục tiêu tài chính của riêng bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INSTRUCTOR SECTION -->
+            <section id="giang-vien" class="w-full mt-10 scroll-mt-24">
+                <div class="flex flex-col items-center gap-10 px-4 py-10 w-full max-w-[1280px] mx-auto">
+                    <div class="text-center">
+                        <h2 class="text-white text-[28px] md:text-[32px] font-bold leading-tight pb-3 pt-5">Gặp Gỡ Giảng Viên</h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-[720px] mx-auto">
+                            Với hơn 15 năm kinh nghiệm thực chiến trên thị trường, giảng viên của chúng tôi sẽ mang đến cho bạn những kiến thức sâu sắc và chiến lược đầu tư hiệu quả nhất.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-8 items-center bg-surface-dark/50 border border-border-dark rounded-2xl p-8 w-full max-w-[900px] hover:border-primary/30 transition-colors shadow-lg">
+                        <div class="relative">
+                            <div class="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20"></div>
+                            <img 
+                                class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-primary/50 shadow-2xl relative z-10" 
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKSFHAJ76a5vWbAzquv_JiuPlcu0XOJGTZg-dsQ8wgnhpqTdxsdYoyWF1XVteTidQNazORHzfSh8-gi8wu7aDLaR5b6hj_2Cc6GMmvSL7QwWhudxKhaQlAMKWpXwPlJxS8hnGSBuBFHJ0vQuslEj-pwYLcpFXDU9-7wdB1v3Dw5IqsvfwutRLdensbYrXBRmL-4kROUuHVO-ZF5mtL6_i82_uDQTYg2ZHyGbDqlJMtz3zYy4wl2Nkklo4-AaleRwTSqBfCnD77hhc" 
+                                alt="David Trần - Instructor"
+                            />
+                        </div>
+                        
+                        <div class="flex flex-col gap-4 text-center md:text-left flex-1">
+                            <div>
+                                <h3 class="text-white text-3xl font-bold">David Trần</h3>
+                                <p class="text-primary text-base font-semibold uppercase tracking-wide mt-1">Chuyên Gia Phân Tích Đầu Tư Cấp Cao</p>
+                            </div>
+                            <p class="text-text-muted text-sm leading-relaxed">
+                                David là một chuyên gia tài chính được công nhận với nhiều năm kinh nghiệm tại các quỹ đầu tư lớn trong và ngoài nước. Anh đã dẫn dắt hàng ngàn nhà đầu tư cá nhân đạt được tự do tài chính thông qua phương pháp phân tích độc đáo kết hợp giữa cơ bản và kỹ thuật, cùng sự kỷ luật trong quản lý rủi ro.
+                            </p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-3 text-white/90 mt-2">
+                                <div class="flex items-center gap-2 border border-border-dark bg-[#28392f]/50 rounded-full px-4 py-1.5 text-xs font-medium hover:bg-primary hover:text-background-dark hover:border-primary transition-all cursor-default">
+                                    <span class="material-symbols-outlined !text-lg">workspace_premium</span>
+                                    <span>Chứng chỉ CFA Level 3</span>
+                                </div>
+                                <div class="flex items-center gap-2 border border-border-dark bg-[#28392f]/50 rounded-full px-4 py-1.5 text-xs font-medium hover:bg-primary hover:text-background-dark hover:border-primary transition-all cursor-default">
+                                    <span class="material-symbols-outlined !text-lg">school</span>
+                                    <span>Thạc sĩ Tài chính (MBA)</span>
+                                </div>
+                                <div class="flex items-center gap-2 border border-border-dark bg-[#28392f]/50 rounded-full px-4 py-1.5 text-xs font-medium hover:bg-primary hover:text-background-dark hover:border-primary transition-all cursor-default">
+                                    <span class="material-symbols-outlined !text-lg">trending_up</span>
+                                    <span>15+ Năm Kinh Nghiệm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COURSE CONTENT SECTION (Accordion) -->
+            <section id="noi-dung" class="w-full mt-10 scroll-mt-24" aria-label="Nội dung chi tiết khóa học">
+                <div class="flex flex-col items-center gap-10 px-4 py-10 w-full max-w-[1280px] mx-auto">
+                    <div class="text-center">
+                        <h2 class="text-white text-[28px] md:text-[32px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
+                            Nội Dung Khóa Học Chi Tiết
+                        </h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-[720px] mx-auto">
+                            Lộ trình học tập được thiết kế bài bản, đi từ những kiến thức nền tảng nhất đến các kỹ năng phân tích chuyên sâu, được cập nhật liên tục với thực tế thị trường.
+                        </p>
+                    </div>
+
+                    <div class="w-full max-w-[800px] space-y-4" role="list" id="course-accordion">
+                        <!-- Module items will be handled by JS or pre-rendered below -->
+                        
+                        <!-- M1 -->
+                        <div class="module-item bg-surface-dark/50 border border-primary shadow-[0_0_15px_rgba(17,212,98,0.1)] rounded-xl overflow-hidden transition-colors duration-300" data-id="m1">
+                            <h3>
+                                <button aria-expanded="true" aria-controls="content-m1" class="accordion-header w-full p-5 flex justify-between items-center text-left transition-colors bg-[#28392f]">
+                                    <span class="font-semibold text-lg text-primary">Module 1: Nhập Môn Thị Trường Chứng Khoán</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 rotate-180 text-primary">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="content-m1" class="accordion-content open">
+                                <div class="accordion-inner">
+                                    <ul class="divide-y divide-border-dark bg-[#1c2720]/30">
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Tổng quan về Thị trường</p><p class="text-text-muted text-xs mt-1">Giới thiệu các khái niệm cơ bản, vai trò của thị trường.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">15 phút</span></div>
+                                        </li>
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Các thuật ngữ phổ biến</p><p class="text-text-muted text-xs mt-1">Cổ phiếu, Trái phiếu, ETF, Bull/Bear market.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">25 phút</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- M2 -->
+                        <div class="module-item bg-surface-dark/50 border border-border-dark hover:border-primary/50 rounded-xl overflow-hidden transition-colors duration-300" data-id="m2">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="content-m2" class="accordion-header w-full p-5 flex justify-between items-center text-left transition-colors hover:bg-[#28392f]/50">
+                                    <span class="font-semibold text-lg text-white">Module 2: Phân Tích Cơ Bản (FA)</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="content-m2" class="accordion-content">
+                                <div class="accordion-inner">
+                                    <ul class="divide-y divide-border-dark bg-[#1c2720]/30">
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Đọc hiểu Báo cáo Tài chính</p><p class="text-text-muted text-xs mt-1">Phân tích Bảng cân đối, KQKD, Lưu chuyển tiền tệ.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">45 phút</span></div>
+                                        </li>
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Định giá cổ phiếu</p><p class="text-text-muted text-xs mt-1">P/E, P/B, DCF và cách ứng dụng thực tế.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">50 phút</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- M3 -->
+                         <div class="module-item bg-surface-dark/50 border border-border-dark hover:border-primary/50 rounded-xl overflow-hidden transition-colors duration-300" data-id="m3">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="content-m3" class="accordion-header w-full p-5 flex justify-between items-center text-left transition-colors hover:bg-[#28392f]/50">
+                                    <span class="font-semibold text-lg text-white">Module 3: Phân Tích Kỹ Thuật (TA)</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="content-m3" class="accordion-content">
+                                <div class="accordion-inner">
+                                    <ul class="divide-y divide-border-dark bg-[#1c2720]/30">
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Lý thuyết Dow & Xu hướng</p><p class="text-text-muted text-xs mt-1">Xác định xu hướng và chu kỳ thị trường.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">30 phút</span></div>
+                                        </li>
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Biểu đồ nến Nhật & Chỉ báo</p><p class="text-text-muted text-xs mt-1">RSI, MACD, MA, Bollinger Bands.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">45 phút</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- M4 -->
+                         <div class="module-item bg-surface-dark/50 border border-border-dark hover:border-primary/50 rounded-xl overflow-hidden transition-colors duration-300" data-id="m4">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="content-m4" class="accordion-header w-full p-5 flex justify-between items-center text-left transition-colors hover:bg-[#28392f]/50">
+                                    <span class="font-semibold text-lg text-white">Module 4: Quản Trị Vốn & Tâm Lý</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="content-m4" class="accordion-content">
+                                <div class="accordion-inner">
+                                    <ul class="divide-y divide-border-dark bg-[#1c2720]/30">
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Phân bổ tài sản</p><p class="text-text-muted text-xs mt-1">Xây dựng danh mục phù hợp khẩu vị rủi ro.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">35 phút</span></div>
+                                        </li>
+                                        <li class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center hover:bg-white/5 transition-colors gap-2 sm:gap-0">
+                                            <div class="flex items-start gap-3">
+                                                <span class="material-symbols-outlined text-primary mt-0.5">play_circle</span>
+                                                <div><p class="text-white text-sm font-medium">Kiểm soát tâm lý (FOMO)</p><p class="text-text-muted text-xs mt-1">Kỷ luật trong giao dịch để chiến thắng.</p></div>
+                                            </div>
+                                            <div class="flex items-center gap-2 pl-9 sm:pl-0"><span class="material-symbols-outlined text-text-muted text-[18px]">schedule</span><span class="text-text-muted text-sm whitespace-nowrap">30 phút</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRICING SECTION -->
+            <section id="hoc-phi" class="w-full mt-10 scroll-mt-24">
+                <div class="flex flex-col items-center gap-10 px-4 py-10 w-full max-w-[1280px] mx-auto">
+                    <div class="text-center">
+                        <h2 class="text-white text-[28px] md:text-[32px] font-bold leading-tight pb-3 pt-5">Học Phí & Ưu Đãi</h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-[720px] mx-auto">
+                            Đầu tư vào kiến thức là khoản đầu tư sinh lời bền vững nhất. Chọn gói học phù hợp với bạn ngay hôm nay để nhận ưu đãi đặc biệt.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-[900px]">
+                        <!-- Online Plan -->
+                        <div class="bg-surface-dark/50 border border-border-dark rounded-2xl p-8 flex flex-col gap-6 hover:shadow-xl transition-all duration-300">
+                            <div class="text-center border-b border-border-dark pb-6">
+                                <h3 class="text-primary text-xl font-bold uppercase tracking-wider">Khóa Online</h3>
+                                <div class="mt-4 flex flex-col items-center">
+                                    <p class="text-white text-4xl font-black">4,999,000đ</p>
+                                    <p class="text-text-muted text-sm line-through mt-1">6,000,000đ</p>
+                                    <span class="mt-2 bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded">-17% Ưu đãi</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-white/90 flex-1">
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Học mọi lúc mọi nơi qua video chất lượng cao</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Truy cập tài liệu & slide bài giảng trọn đời</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Tham gia cộng đồng học viên kín (Zalo)</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Hỗ trợ giải đáp thắc mắc 24/7</span></li>
+                            </ul>
+                            <button class="w-full mt-auto flex cursor-pointer items-center justify-center rounded-xl h-12 px-5 bg-[#28392f] text-white text-base font-bold hover:bg-[#3b5445] transition-all hover:scale-[1.02]">
+                                Đăng Ký Gói Online
+                            </button>
+                        </div>
+
+                        <!-- Offline/Hybrid Plan -->
+                        <div class="bg-[#1c2720] border-2 border-primary rounded-2xl p-8 flex flex-col gap-6 relative shadow-[0_0_30px_rgba(17,212,98,0.15)] transform md:-translate-y-4">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background-dark text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+                                PHỔ BIẾN NHẤT
+                            </div>
+                            <div class="text-center border-b border-border-dark pb-6">
+                                <h3 class="text-primary text-xl font-bold uppercase tracking-wider">Khóa Offline / Hybrid</h3>
+                                <div class="mt-4 flex flex-col items-center">
+                                    <p class="text-white text-4xl font-black">7,999,000đ</p>
+                                    <p class="text-text-muted text-sm line-through mt-1">10,000,000đ</p>
+                                    <span class="mt-2 bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded">-20% Ưu đãi</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-white/90 flex-1">
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span class="font-bold">Toàn bộ quyền lợi gói Online</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>8 buổi học trực tiếp tại lớp (hoặc Zoom)</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Tương tác 1-1, sửa lỗi trực tiếp cùng giảng viên</span></li>
+                                <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">check_circle</span><span>Tặng gói tư vấn danh mục 1-1 trong 3 tháng</span></li>
+                            </ul>
+                            <button class="w-full mt-auto flex cursor-pointer items-center justify-center rounded-xl h-12 px-5 bg-primary text-background-dark text-base font-bold hover:bg-primary/90 transition-all hover:scale-[1.02] shadow-lg shadow-primary/25">
+                                Đăng Ký Gói Offline
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- FAQ SECTION -->
+            <section id="faq" class="w-full mt-10 scroll-mt-24" aria-labelledby="faq-heading">
+                <div class="flex flex-col items-center gap-10 px-4 py-10 w-full max-w-[1280px] mx-auto">
+                    <div class="text-center">
+                        <h2 id="faq-heading" class="text-white text-[28px] md:text-[32px] font-bold leading-tight pb-3 pt-5">
+                            Câu Hỏi Thường Gặp
+                        </h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-[720px] mx-auto">
+                            Giải đáp những thắc mắc phổ biến nhất của học viên về khóa học và đầu tư chứng khoán.
+                        </p>
+                    </div>
+
+                    <div class="w-full max-w-[800px] flex flex-col gap-4" id="faq-accordion">
+                         <!-- FAQ 1 -->
+                        <div class="faq-item bg-surface-dark/50 border border-primary shadow-[0_0_15px_rgba(17,212,98,0.1)] rounded-xl overflow-hidden transition-all duration-300" data-index="0">
+                            <h3>
+                                <button aria-expanded="true" aria-controls="faq-content-0" class="faq-header w-full p-5 flex justify-between items-center text-left text-white hover:bg-surface-dark transition-colors">
+                                    <span class="font-semibold text-base md:text-lg text-primary">Tôi là người mới chưa biết gì về chứng khoán có học được không?</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 ml-4 shrink-0 rotate-180 text-primary">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="faq-content-0" class="accordion-content open">
+                                <div class="accordion-inner p-5 pt-0 text-text-muted text-sm md:text-base leading-relaxed border-t border-border-dark/30">
+                                    Hoàn toàn được. Khóa học được thiết kế theo lộ trình từ cơ bản đến nâng cao (Module 1). Chúng tôi giải thích chi tiết các thuật ngữ, cách mở tài khoản và sử dụng phần mềm giao dịch, đảm bảo người mới bắt đầu có thể tiếp thu dễ dàng.
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- FAQ 2 -->
+                        <div class="faq-item bg-surface-dark/50 border border-border-dark hover:border-primary/30 rounded-xl overflow-hidden transition-all duration-300" data-index="1">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="faq-content-1" class="faq-header w-full p-5 flex justify-between items-center text-left text-white hover:bg-surface-dark transition-colors">
+                                    <span class="font-semibold text-base md:text-lg text-white">Thời gian học như thế nào? Tôi có thể xem lại bài giảng không?</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 ml-4 shrink-0 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="faq-content-1" class="accordion-content">
+                                <div class="accordion-inner p-5 pt-0 text-text-muted text-sm md:text-base leading-relaxed border-t border-border-dark/30">
+                                    Đối với khóa Online, bạn có thể học bất cứ lúc nào và xem lại video bài giảng trọn đời. Với khóa Offline/Hybrid, ngoài các buổi học trực tiếp, bạn cũng sẽ được cấp quyền truy cập vào kho video online để ôn tập không giới hạn.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="faq-item bg-surface-dark/50 border border-border-dark hover:border-primary/30 rounded-xl overflow-hidden transition-all duration-300" data-index="2">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="faq-content-2" class="faq-header w-full p-5 flex justify-between items-center text-left text-white hover:bg-surface-dark transition-colors">
+                                    <span class="font-semibold text-base md:text-lg text-white">Tôi cần chuẩn bị bao nhiêu vốn để bắt đầu đầu tư?</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 ml-4 shrink-0 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="faq-content-2" class="accordion-content">
+                                <div class="accordion-inner p-5 pt-0 text-text-muted text-sm md:text-base leading-relaxed border-t border-border-dark/30">
+                                    Thị trường chứng khoán không yêu cầu số vốn quá lớn để bắt đầu. Bạn có thể bắt đầu tập giao dịch với số vốn nhỏ (từ 2-5 triệu đồng) để làm quen với thị trường và kiểm soát tâm lý trước khi đầu tư số tiền lớn hơn.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="faq-item bg-surface-dark/50 border border-border-dark hover:border-primary/30 rounded-xl overflow-hidden transition-all duration-300" data-index="3">
+                            <h3>
+                                <button aria-expanded="false" aria-controls="faq-content-3" class="faq-header w-full p-5 flex justify-between items-center text-left text-white hover:bg-surface-dark transition-colors">
+                                    <span class="font-semibold text-base md:text-lg text-white">Sau khóa học, tôi có được hỗ trợ thực hành không?</span>
+                                    <span class="material-symbols-outlined transform transition-transform duration-300 ml-4 shrink-0 text-text-muted">expand_more</span>
+                                </button>
+                            </h3>
+                            <div id="faq-content-3" class="accordion-content">
+                                <div class="accordion-inner p-5 pt-0 text-text-muted text-sm md:text-base leading-relaxed border-t border-border-dark/30">
+                                    Có. Tất cả học viên đều được tham gia cộng đồng kín trên Zalo/Discord, nơi giảng viên và đội ngũ trợ giảng sẽ hỗ trợ giải đáp thắc mắc, nhận định thị trường hàng ngày và gợi ý các mã cổ phiếu tiềm năng trọn đời.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT SECTION -->
+            <section id="lien-he" class="w-full my-10 scroll-mt-24">
+                <div class="w-full max-w-[1280px] mx-auto px-4">
+                    <div class="bg-surface-dark/50 border border-border-dark rounded-2xl flex flex-col items-center gap-6 p-8 md:p-14 text-center relative overflow-hidden">
+                        <!-- Background decoration -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                        <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+                        <h2 class="text-white text-3xl md:text-4xl font-bold leading-tight relative z-10">
+                            Sẵn Sàng Chinh Phục Thị Trường?
+                        </h2>
+                        <p class="text-text-muted text-base font-normal leading-normal max-w-2xl relative z-10">
+                            Để lại thông tin của bạn bên dưới, đội ngũ tư vấn của ProInvestor sẽ liên hệ để giải đáp mọi thắc mắc và hỗ trợ bạn hoàn tất đăng ký trong thời gian sớm nhất.
+                        </p>
+                        
+                        <form class="flex flex-col md:flex-row gap-4 w-full max-w-2xl mt-4 relative z-10" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ sớm.');">
+                            <input 
+                                type="text" 
+                                placeholder="Họ và Tên" 
+                                required
+                                class="flex-1 h-12 px-4 rounded-xl bg-[#28392f] text-white border-border-dark focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-white/40 transition-all outline-none"
+                            />
+                            <input 
+                                type="email" 
+                                placeholder="Email của bạn" 
+                                required
+                                class="flex-1 h-12 px-4 rounded-xl bg-[#28392f] text-white border-border-dark focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-white/40 transition-all outline-none"
+                            />
+                            <button 
+                                type="submit" 
+                                class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-xl h-12 px-6 bg-primary text-background-dark text-base font-bold hover:bg-white hover:text-background-dark transition-all duration-300 shadow-lg shadow-primary/20"
+                            >
+                                Gửi Thông Tin
+                            </button>
+                        </form>
+                        <p class="text-text-muted text-xs mt-2 relative z-10 opacity-60">
+                            *Chúng tôi cam kết bảo mật thông tin cá nhân của bạn.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="w-full bg-surface-dark/30 border-t border-border-dark pt-16 pb-8">
+            <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="flex items-center gap-4 text-white mb-6">
+                            <div class="size-8 text-primary">
+                                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l1.5-1.5L10 14l4-4 1.5 1.5L10 17l-3.5-3.5z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-white text-2xl font-bold leading-tight">ProInvestor</h2>
+                        </div>
+                        <p class="text-text-muted text-sm leading-relaxed max-w-sm">
+                            Nền tảng đào tạo đầu tư chứng khoán hàng đầu, giúp bạn nắm vững kiến thức thực chiến và tự tin ra quyết định tài chính đúng đắn.
+                        </p>
+                        <div class="mt-6 space-y-3 text-text-muted text-sm">
+                            <p class="flex items-center gap-3 hover:text-white transition-colors"><span class="material-symbols-outlined !text-lg text-primary">location_on</span><span>123 Đường Tài Chính, Quận 1, TP. Hồ Chí Minh</span></p>
+                            <p class="flex items-center gap-3 hover:text-white transition-colors"><span class="material-symbols-outlined !text-lg text-primary">mail</span><span>support@proinvestor.vn</span></p>
+                            <p class="flex items-center gap-3 hover:text-white transition-colors"><span class="material-symbols-outlined !text-lg text-primary">call</span><span>(028) 1234 5678</span></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-6">Về chúng tôi</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Giới thiệu</a></li>
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Đội ngũ giảng viên</a></li>
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Tuyển dụng</a></li>
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Liên hệ</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-6">Chính sách</h3>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Điều khoản sử dụng</a></li>
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Chính sách bảo mật</a></li>
+                            <li><a href="#" class="text-text-muted hover:text-primary text-sm transition-colors">Câu hỏi thường gặp</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-12 pt-8 border-t border-border-dark flex flex-col sm:flex-row justify-between items-center text-center gap-4">
+                    <p class="text-text-muted text-xs">© 2024 ProInvestor. Đã đăng ký bản quyền.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Logic
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            menuBtn.addEventListener('click', () => {
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                menuIcon.textContent = isExpanded ? 'menu' : 'close';
+            });
+
+            // Close mobile menu when clicking a link
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                    menuIcon.textContent = 'menu';
+                });
+            });
+
+            // Accordion Logic (Generic for Course Content and FAQ)
+            // Function to handle single active item behavior
+            function setupAccordion(containerId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const items = container.querySelectorAll('[data-id], [data-index]'); // Select module-item or faq-item
+
+                items.forEach(item => {
+                    const header = item.querySelector('button');
+                    
+                    header.addEventListener('click', () => {
+                        // Check if currently open
+                        const isOpen = item.querySelector('.accordion-content').classList.contains('open');
+
+                        // Close all items in this container
+                        items.forEach(otherItem => {
+                            const otherContent = otherItem.querySelector('.accordion-content');
+                            const otherHeader = otherItem.querySelector('button');
+                            const otherIcon = otherHeader.querySelector('.material-symbols-outlined');
+                            const otherTitle = otherHeader.querySelector('span:first-child');
+                            
+                            otherContent.classList.remove('open');
+                            otherHeader.setAttribute('aria-expanded', 'false');
+                            otherIcon.classList.remove('rotate-180', 'text-primary');
+                            otherIcon.classList.add('text-text-muted');
+                            
+                            // Reset styles for FAQ/Course
+                            if (containerId === 'course-accordion') {
+                                otherItem.classList.remove('border-primary', 'shadow-[0_0_15px_rgba(17,212,98,0.1)]');
+                                otherItem.classList.add('border-border-dark');
+                                otherHeader.classList.remove('bg-[#28392f]');
+                                otherTitle.classList.remove('text-primary');
+                                otherTitle.classList.add('text-white');
+                            } else {
+                                // FAQ Styles
+                                otherItem.classList.remove('border-primary', 'shadow-[0_0_15px_rgba(17,212,98,0.1)]');
+                                otherItem.classList.add('border-border-dark');
+                                otherTitle.classList.remove('text-primary');
+                                otherTitle.classList.add('text-white');
+                            }
+                        });
+
+                        // If it wasn't open, open it now
+                        if (!isOpen) {
+                            const content = item.querySelector('.accordion-content');
+                            const icon = header.querySelector('.material-symbols-outlined');
+                            const title = header.querySelector('span:first-child');
+
+                            content.classList.add('open');
+                            header.setAttribute('aria-expanded', 'true');
+                            icon.classList.add('rotate-180', 'text-primary');
+                            icon.classList.remove('text-text-muted');
+
+                            if (containerId === 'course-accordion') {
+                                item.classList.add('border-primary', 'shadow-[0_0_15px_rgba(17,212,98,0.1)]');
+                                item.classList.remove('border-border-dark');
+                                header.classList.add('bg-[#28392f]');
+                                title.classList.add('text-primary');
+                                title.classList.remove('text-white');
+                            } else {
+                                item.classList.add('border-primary', 'shadow-[0_0_15px_rgba(17,212,98,0.1)]');
+                                item.classList.remove('border-border-dark');
+                                title.classList.add('text-primary');
+                                title.classList.remove('text-white');
+                            }
+                        }
+                    });
+                });
+            }
+
+            setupAccordion('course-accordion');
+            setupAccordion('faq-accordion');
+        });
+    </script>
 </body>
 </html>
